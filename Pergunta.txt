@@ -1,0 +1,2 @@
+Resposta:
+O ultimo dígito de PSW é 1 se o número de "1's" no binário do atual registrador é par e 0 se o número de "1's" no binário do atual registrador é ímpar.
