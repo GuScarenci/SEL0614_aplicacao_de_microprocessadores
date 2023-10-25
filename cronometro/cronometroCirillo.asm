@@ -44,7 +44,6 @@ Here:  		Nop						;loop interno
 			Djnz R0, Again  		;continua o loop externo enquanto R0 não for 0
 			Djnz R7, Delay			;continua o loop geral enquanto R7 não for 0
 			Jmp Number_inc			;retorna do delay para o ponto de incremento 
-			;!talvez remover ret e trazer um jmp direto pra ca e trocar o acall?
 
 ;calculo de loop:
 	;no loop interno temos 1 + 1 + 2 ciclos de máquina rodando 200 vezes, cada ciclo tem 1.085us com 11.0592MHz
