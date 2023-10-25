@@ -1,15 +1,16 @@
-# Cronômetro Digital
-## SEL0614 - Aplicação de Microprocessadores
-### Professor: Pedro Oliveira
-### Aluno: Gustavo Moura Scarenci de Carvalho Ferreira, nºUSP 12547792
-### Aluno: Matheus Henrique Dias Cirillo, nºUSP 12547750
-### 25/10/2023
+
+SEL0614 - Aplicação de Microprocessadores
+
+Professor: 
+- Pedro Oliveira
+Alunos: 
+- Gustavo Moura Scarenci de Carvalho Ferreira, nºUSP 12547792
+- Matheus Henrique Dias Cirillo, nºUSP 12547750
 
 # Código Comentado
-```
-
-SW1 Equ P2.0 ;Definição de variavel para legibilidade do código
-SW2 Equ P2.1 ;Definição de variavel para legibilidade do código
+```asmatmel
+SW0 Equ P2.0 ;Definição de variavel para legibilidade do código
+SW1 Equ P2.1 ;Definição de variavel para legibilidade do código
 
 CS EQU P0.7  ;Definição de variavel para legibilidade do código
 A0 EQU P3.3  ;Definição de variavel para legibilidade do código
@@ -23,9 +24,9 @@ Select:
 	SETB A1	;Select Disp	
 
 Start:
+	JNB SW0, Init			;Caso SW0 pressionado (low) inicializa o programa
 	JNB SW1, Init			;Caso SW1 pressionado (low) inicializa o programa
-	JNB SW2, Init			;Caso SW2 pressionado (low) inicializa o programa
-	SJMP Start				;Volta para o start esperando SW1 ou SW2 ser pressionado
+	SJMP Start				;Volta para o start esperando SW0 ou SW1 ser pressionado
 
 Init:		
 	Mov R3,#00Ah			;Inicializador do loop para rodar o programa 10(0Ah) vezes
@@ -37,12 +38,12 @@ Back:
 	CLR A					;Limpa o valor de A e estabelece o ponto de retorno do loop 0 a 9
 	MOVC A,@A+DPTR			;Insere DPTR com um offset de A em A
 	MOV P1,A				;Mostra A no display selecionado
-	JNB SW1, Delay_250ms	;Caso SW1 pressionado (low) faz o delay de 250ms
-	JNB SW2, Delay_1000ms	;Caso SW2 pressionado (low) faz o delay de 1000ms
+	JNB SW0, Delay_250ms	;Caso SW0 pressionado (low) faz o delay de 250ms
+	JNB SW1, Delay_1000ms	;Caso SW1 pressionado (low) faz o delay de 1000ms
 
 Number_inc:
 	INC DPTR				;Próximo valor da tabela de procura e ponto de retorno dos delays,
-							;com esse ponto de retorno caso SW1 e SW2 estejam pressionados o delay não sera 1250ms
+							;com esse ponto de retorno caso SW0 e SW1 estejam pressionados o delay não sera 1250ms
 	DJNZ R3,Back			;Decrementa nosso loop de rodar o programa em 10 vezes e retorna para back
 	SJMP Init				;Caso ele passe do decremento e retorno do loop retorna para init e reinicia a contagem
 
@@ -92,7 +93,26 @@ end
 
 ```
 # Fluxo simplificado do código
-![Image](./diagrama)
+![[diagrama.png]]
 
-# Reference
+# Interfaces
+![[Screenshot 2023-10-25 192108.png]]
+
+Utilizamos CS, A0 e A1 para escolher o display que queremos exibir o nosso número.
+- CS -> ativa o chip o seletor e nos permite escolher um dos displays para funcionar
+- A0 e A1 linhas de seleção 2 para 4, usando 2 sinais podemos controlar 4 saídas diferentes, o que permite escolher um dos 4 displays dependendo do sinal em A0 e A1.
+
+Usando P1 podemos exibir os valores a serem mostrados no display.
+# 7 segments display
+![[Pasted image 20231025193618.png]]
+
+## Numbers table
+![[Pasted image 20231025193656.png]]
+
+Assim, caso o objetivo seja exibir o valor 7 no display, devemos colocar P1 com o valor de `#0F8h`.
+
+# Delay
+SW0 e SW1 controlam o delay do contador e são entradas detectadas por P0 no bit 0 e 1. Quando SW1 está ligado a rotina de delay de 0,25s roda 4 vezes, gerando um delay de 1s. Já quando SW0 está ligado ele da um override em SW1 e faz com a rotina de delay de 0,25s rode apenas uma vez, gerando um delay de 0,25s.
+
+# References
 https://what-when-how.com/8051-microcontroller/time-delay-for-various-8051-chips/
