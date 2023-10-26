@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "f38358aa1496a77e",
+        "id": "60cfdd95f6d27042",
         "type": "tabs",
         "children": [
           {
-            "id": "b9907b7ce3a2128d",
+            "id": "046b326f16aaf5d7",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -146,11 +146,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b9907b7ce3a2128d",
+  "active": "046b326f16aaf5d7",
   "lastOpenFiles": [
+    "cronometro.asm",
+    "cronometroHugo.asm",
+    "diagrama.png.crdownload",
+    "diagrama.png",
+    "Cronômetro Digital.md",
+    "CronometroFluxo.png.crdownload",
+    "Cronômetro Digital.pdf",
+    "CronometroFluxo.png",
     "images/Screenshot 2023-10-25 192108.png",
     "images/Pasted image 20231025193618.png",
-    "Cronômetro Digital.md",
     "images",
     "images/Pasted image 20231025193656.png"
   ]
